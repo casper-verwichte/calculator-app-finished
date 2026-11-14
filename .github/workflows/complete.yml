@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  complete:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +22,9 @@ jobs:
       - name: Build ZIP archive
         run: zip -r application.zip . -x ".git/*"
 
-      - name: Show files
-        run: ls -alh
+      - name: Run unit tests
+        run: npm test -- --coverage
+
+      - name: Show coverage files
+        if: always()
+        run: ls -alhR coverage || true
